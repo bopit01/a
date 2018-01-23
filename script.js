@@ -72,4 +72,18 @@ testArea.addEventListener("keypress", start, false);
 testArea.addEventListener("keyup", spellCheck, false);
 resetButton.addEventListener("click", reset, false);
 
-let text = "hello";
+//var to hold the result of the test
+
+
+//function that creates a collection of the different list items that make up the best times
+function captureLeaderboard() {
+  let scores = document.querySelectorAll("li");
+
+  let newIndex = scores.length;
+  console.log(newIndex);
+
+  scores[newIndex]="<li>"+100+"</li>"
+
+}
+
+captureLeaderboard();
