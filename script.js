@@ -72,18 +72,30 @@ testArea.addEventListener("keypress", start, false);
 testArea.addEventListener("keyup", spellCheck, false);
 resetButton.addEventListener("click", reset, false);
 
-//var to hold the result of the test
+//function to convert value of theTimer into seconds. New Var
 
 
-//function that creates a collection of the different list items that make up the best times
+//function that creates a collection of the different list items that make up the best times. test to see what index in the li collection the new score should have. Generate new ol to publish to page
 function captureLeaderboard() {
   let scores = document.querySelectorAll("li");
+  let newScore = 1;
+  for (let i = 0; i< scores.length; i +=1) {
+    console.log(scores[i].innerHTML);
+    if (newScore < scores[i].innerHTML) {
+      console.log("new score is smaller");
+      //break;
+      //stop running loop when the new score is smaller than index
+    } else {
+      console.log("ajsbdi");
+    }
+  }
 
-  let newIndex = scores.length;
-  console.log(newIndex);
 
-  scores[newIndex]="<li>"+100+"</li>"
 
+}
+
+function changeList () {
+  let ol = document.querySelector("ol");
 }
 
 captureLeaderboard();
