@@ -35,7 +35,7 @@ function spellCheck() {
   if (textEntered == originText) {
     clearInterval(interval);
     testWrapper.style.borderColor = "#429890";
-    convertTimerValue(timer);
+    //convertTimerValue(timer);
     //trigger method that converts timer value into number of seconds
   } else {
     if (textEntered == originTextMatch) {
@@ -84,13 +84,24 @@ function convertTimerValue(arr) {
 }
 
 //function that creates a collection of the different list items that make up the best times. test to see what index in the li collection the new score should have.
-function captureLeaderboard(newScore) {
-  let scores = document.querySelectorAll("li");
-  //let newScore = 45;
-  let newTableScores = [];
+function captureLeaderboard() {
+  let scores = document.querySelectorAll("#tested");
   let bestScore = scores[0].innerHTML;
   let bottomScore = scores[scores.length - 1].innerHTML;
+  let newScore = 10;
   let newIndex;
+  let originalTableScores = [];
+  let newTableScores = [];
+
+  //loop through each value in scores, create an array containing the time and the name of the li contents, add that array to the originalTableScores array
+  for (var i = 0; i < scores.length; i++) {
+    console.log(scores[i]);
+    let li = [];
+    //li[0] = scores[i].querySelector(".score");
+    console.log(li);
+    //li[1] = name of li
+    //originalTableScores[i] = li;
+  }
 
   for (let index = 0; index < scores.length; index += 1) {
     newTableScores[index] = scores[index].innerHTML;
@@ -125,4 +136,4 @@ function changeList(newContent) {
   ol.innerHTML = newContent;
 }
 
-//captureLeaderboard();
+captureLeaderboard();
