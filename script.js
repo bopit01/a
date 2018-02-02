@@ -35,7 +35,7 @@ function spellCheck() {
   if (textEntered == originText) {
     clearInterval(interval);
     testWrapper.style.borderColor = "#429890";
-    //convertTimerValue(timer);
+    resultCalc(timer);
     //trigger method that converts timer value into number of seconds
   } else {
     if (textEntered == originTextMatch) {
@@ -73,60 +73,66 @@ testArea.addEventListener("keypress", start, false);
 testArea.addEventListener("keyup", spellCheck, false);
 resetButton.addEventListener("click", reset, false);
 
-//function to convert value of theTimer into seconds. New Var
-function convertTimerValue(arr) {
+function resultCalc(arr) {
   let time = 0;
   let seconds = arr[1];
-  let milliseconds = (arr[2]/100);
+  let milliseconds = (arr[2] / 100);
   time = seconds + milliseconds;
-  console.log(time);
-  captureLeaderboard(time);
+  testCompleted(time);
+}
+
+function testCompleted(result) {
+  let name = prompt("please enter your name")
+  captureLeaderboard(result, name);
 }
 
 //function that creates a collection of the different list items that make up the best times. test to see what index in the li collection the new score should have.
-function captureLeaderboard() {
-  let scores = document.querySelectorAll("#tested");
-  let bestScore = scores[0].innerHTML;
-  let bottomScore = scores[scores.length - 1].innerHTML;
-  let newScore = 10;
+function captureLeaderboard(newScore, newName) {
+  let scores = document.querySelectorAll("li");
   let newIndex;
   let originalTableScores = [];
   let newTableScores = [];
 
+  //placeholder variables that will become arguments
+  // let newScore = 26;
+  // let newName = "Leo";
+
+
   //loop through each value in scores, create an array containing the time and the name of the li contents, add that array to the originalTableScores array
   for (var i = 0; i < scores.length; i++) {
-    console.log(scores[i]);
     let li = [];
-    //li[0] = scores[i].querySelector(".score");
-    console.log(li);
-    //li[1] = name of li
-    //originalTableScores[i] = li;
+    scoreInner = scores[i].querySelector(".score");
+    li[0] = scoreInner.innerHTML;
+    nameInner = scores[i].querySelector(".name");
+    li[1] = nameInner.innerHTML;
+    originalTableScores[i] = li;
   }
 
-  for (let index = 0; index < scores.length; index += 1) {
-    newTableScores[index] = scores[index].innerHTML;
-  }
+  let bestScore = originalTableScores[0][0];
+  let bottomScore = originalTableScores[scores.length - 1][0];
+
   if (newScore > bottomScore) {
-    newTableScores.push(newScore);
+    originalTableScores.push([newScore, newName]);
   } else if (newScore < bestScore) {
-    newTableScores.unshift(newScore);
+    originalTableScores.unshift([newScore, newName]);
   } else if (bestScore < newScore < bottomScore) {
-    for (let i = 0; i < newTableScores.length; i++) {
-      if (newScore < newTableScores[i]) {
+    for (let i = 0; i < originalTableScores.length; i++) {
+      if (newScore < originalTableScores[i][0]) {
         newIndex = i;
+        originalTableScores.splice(newIndex, 0, [newScore, newName]);
         break;
       }
     }
-    newTableScores.splice(newIndex, 0, newScore);
+
   }
-  generateOl(newTableScores);
+  generateOl(originalTableScores);
 }
 
 //function to generate String of new ol if new score needs to be added, publish to page with changeList function
 function generateOl(arr) {
   let newOlString = "";
   for (let i = 0; i < arr.length; i += 1) {
-    newOlString += "<li>" + arr[i] + "</li>";
+    newOlString += "<li><p class=\"score\">" + arr[i][0] + "</p><p class=\"name\">"+arr[i][1]+"</li>";
   }
   changeList(newOlString);
 }
@@ -136,4 +142,4 @@ function changeList(newContent) {
   ol.innerHTML = newContent;
 }
 
-captureLeaderboard();
+//captureLeaderboard();
